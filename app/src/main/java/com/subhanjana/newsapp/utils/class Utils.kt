@@ -1,6 +1,7 @@
 package com.subhanjana.newsapp.utils
 
 import com.subhanjana.newsapp.data.model.Country
+import com.subhanjana.newsapp.data.model.Language
 
 class Utils {
     companion object {
@@ -23,6 +24,22 @@ class Utils {
                 Country("eg","Egypt"),
                 Country("fr","France"),
                 Country("gb","United Kingdom")
+            )
+        }
+
+        fun getLanguages(): List<Language> {
+            return listOf( Language("ar","Arabic"),
+                Language("de","German"),
+                Language("en","English"),
+                Language("es","Spanish"),
+                Language("fr","French"),
+                Language("he","Hebrew"),
+                Language("it","Italian"),
+                Language("nl","Dutch"),
+                Language("no","Norwegian"),
+                Language("pt","Portuguese"),
+                Language("ru","Russian"),
+                Language("sv","Swedish")
             )
         }
     }

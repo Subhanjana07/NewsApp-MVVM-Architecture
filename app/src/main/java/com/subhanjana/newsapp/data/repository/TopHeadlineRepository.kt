@@ -3,6 +3,7 @@ package com.subhanjana.newsapp.data.repository
 import com.subhanjana.newsapp.data.api.NetworkService
 import com.subhanjana.newsapp.data.model.Article
 import com.subhanjana.newsapp.data.model.Country
+import com.subhanjana.newsapp.data.model.Language
 import com.subhanjana.newsapp.utils.Utils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -22,6 +23,11 @@ class TopHeadlineRepository @Inject constructor(private val networkService: Netw
     fun getCountries(): Flow<List<Country>>{
         return flow {
             emit(Utils.getCountries())
+        }
+    }
+    fun getLanguages() : Flow<List<Language>> {
+        return flow{
+            emit(Utils.getLanguages())
         }
     }
 }

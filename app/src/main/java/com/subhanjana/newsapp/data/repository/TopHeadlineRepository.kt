@@ -39,4 +39,12 @@ class TopHeadlineRepository @Inject constructor(private val networkService: Netw
             it.sources
         }
     }
+
+    fun getSearchResult(searchKey : String) : Flow<List<Article>>{
+        return  flow {
+            emit(networkService.getSearchResult(searchKey))
+        }.map {
+            it.articles
+        }
+    }
 }

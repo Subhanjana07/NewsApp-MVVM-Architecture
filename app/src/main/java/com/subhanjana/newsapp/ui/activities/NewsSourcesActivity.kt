@@ -1,16 +1,12 @@
-package com.subhanjana.newsapp.ui.activities;
+package com.subhanjana.newsapp.ui.activities
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.subhanjana.newsapp.R
 
-import android.os.Bundle;
-
-import com.subhanjana.newsapp.R;
-
-public class NewsSourcesActivity extends AppCompatActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_sources);
+class NewsSourcesActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_news_sources)
     }
 }

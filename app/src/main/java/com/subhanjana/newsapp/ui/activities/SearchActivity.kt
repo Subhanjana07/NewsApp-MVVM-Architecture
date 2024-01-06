@@ -60,6 +60,11 @@ class SearchActivity : AppCompatActivity() {
             )
         )
         recyclerView.adapter = searchAdapter
+        binding.layoutError.btnError.setOnClickListener {
+            binding.progressBar.visibility = View.VISIBLE
+            binding.includeLayoutError.visibility = View.GONE
+            searchViewModel.getSearchResult(binding.searchView.getQueryTextChangeStateFlow())
+        }
     }
 
     private fun setUpObserver() {
@@ -71,15 +76,19 @@ class SearchActivity : AppCompatActivity() {
                             is UiState.Success -> {
                                 binding.rvSearch.visibility = View.VISIBLE
                                 binding.progressBar.visibility = View.GONE
+                                binding.includeLayoutError.visibility =  View.GONE
+
                                 renderList(it.data)
                             }
                             is UiState.Loading -> {
                                 binding.progressBar.visibility = View.VISIBLE
                                     binding.rvSearch.visibility = View.GONE
+                                binding.includeLayoutError.visibility =  View.GONE
 
                             }
                             is UiState.Error -> {
                                 binding.rvSearch.visibility = View.GONE
+                                binding.includeLayoutError.visibility =  View.VISIBLE
                                 searchAdapter.clear()
                             }
                         }

@@ -54,6 +54,11 @@ class TopHeadlineActivity : AppCompatActivity() {
             DividerItemDecoration(recyclerView.context,
                 (recyclerView.layoutManager as LinearLayoutManager).orientation))
         recyclerView.adapter = topHeadlineAdapter
+        binding.layoutError.btnError.setOnClickListener {
+            binding.progressBarTopHeadline.visibility = View.VISIBLE
+            binding.includeLayoutError.visibility =  View.GONE
+            topHeadlineViewModel.fetchNews()
+        }
     }
     private fun renderList(articleList: List<Article>) {
         topHeadlineAdapter.addData(articleList)
@@ -68,13 +73,16 @@ class TopHeadlineActivity : AppCompatActivity() {
                             binding.progressBarTopHeadline.visibility = View.GONE
                             renderList(it.data)
                             binding.rvTopHeadline.visibility = View.VISIBLE
+                            binding.includeLayoutError.visibility =  View.GONE
                         }
                         is UiState.Loading -> {
                             binding.progressBarTopHeadline.visibility = View.VISIBLE
                             binding.rvTopHeadline.visibility = View.GONE
+                            binding.includeLayoutError.visibility =  View.GONE
                         }
                         is UiState.Error -> {
                             binding.progressBarTopHeadline.visibility = View.GONE
+                            binding.includeLayoutError.visibility =  View.VISIBLE
                             Toast.makeText(this@TopHeadlineActivity, it.message, Toast.LENGTH_LONG)
                                 .show()
                             Log.e("error",it.message)

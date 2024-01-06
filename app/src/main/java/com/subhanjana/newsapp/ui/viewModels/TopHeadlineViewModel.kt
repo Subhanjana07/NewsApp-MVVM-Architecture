@@ -18,7 +18,7 @@ class TopHeadlineViewModel(private val topHeadlineRepository: TopHeadlineReposit
     init{
         fetchNews()
     }
-    private fun fetchNews(){
+    fun fetchNews(){
         viewModelScope.launch {
             topHeadlineRepository.getTopHeadlines(COUNTRY)
                 .catch { e ->

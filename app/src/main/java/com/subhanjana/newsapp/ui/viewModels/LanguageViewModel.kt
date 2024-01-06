@@ -16,7 +16,7 @@ class LanguageViewModel(private val topHeadlineRepository: TopHeadlineRepository
     init{
         fetchLanguage()
     }
-    private fun fetchLanguage() {
+    fun fetchLanguage() {
         viewModelScope.launch {
             topHeadlineRepository.getLanguages()
                 .catch { e ->

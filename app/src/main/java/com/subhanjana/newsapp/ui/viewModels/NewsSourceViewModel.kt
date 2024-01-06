@@ -17,7 +17,7 @@ class NewsSourceViewModel(private val topHeadlineRepository: TopHeadlineReposito
     init{
         fetchSource()
     }
-    private fun fetchSource(){
+    fun fetchSource(){
         viewModelScope.launch {
             topHeadlineRepository.getNewsSources()
                 .catch { e->

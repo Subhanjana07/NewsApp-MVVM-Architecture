@@ -54,6 +54,11 @@ class LanguageActivity : AppCompatActivity() {
                 (recyclerView.layoutManager as LinearLayoutManager).orientation)
         )
         recyclerView.adapter = languageAdapter
+        binding.layoutError.btnError.setOnClickListener {
+            binding.progressBarLanguage.visibility = View.VISIBLE
+            binding.includeLayoutError.visibility = View.GONE
+            languageViewModel.fetchLanguage()
+        }
     }
     private fun renderList(languageList: List<Language>) {
         languageAdapter.addData(languageList)
@@ -67,15 +72,18 @@ class LanguageActivity : AppCompatActivity() {
                         is UiState.Success -> {
                             binding.progressBarLanguage.visibility = View.GONE
                             binding.rvLanguage.visibility = View.VISIBLE
+                            binding.includeLayoutError.visibility =  View.GONE
                             renderList(it.data)
 
                         }
                         is UiState.Loading -> {
                             binding.progressBarLanguage.visibility = View.VISIBLE
                             binding.rvLanguage.visibility = View.GONE
+                            binding.includeLayoutError.visibility =  View.GONE
                         }
                         is UiState.Error -> {
                             binding.progressBarLanguage.visibility = View.GONE
+                            binding.includeLayoutError.visibility =  View.VISIBLE
                             Toast.makeText(this@LanguageActivity, it.message, Toast.LENGTH_LONG)
                                 .show()
                             Log.e("error",it.message)

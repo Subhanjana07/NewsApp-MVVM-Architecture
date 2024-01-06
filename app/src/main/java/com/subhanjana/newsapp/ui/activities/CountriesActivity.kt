@@ -54,6 +54,11 @@ class CountriesActivity : AppCompatActivity() {
                 (recyclerView.layoutManager as LinearLayoutManager).orientation)
         )
         recyclerView.adapter = countryAdapter
+        binding.layoutError.btnError.setOnClickListener {
+            binding.progressBarCountries.visibility = View.VISIBLE
+            binding.includeLayoutError.visibility = View.GONE
+            countryViewModel.fetchCountries()
+        }
     }
     private fun renderList(countryList: List<Country>) {
         countryAdapter.addData(countryList)
@@ -67,15 +72,18 @@ class CountriesActivity : AppCompatActivity() {
                             is UiState.Success -> {
                                 binding.progressBarCountries.visibility = View.GONE
                                 binding.rvCountries.visibility = View.VISIBLE
+                                binding.includeLayoutError.visibility =  View.GONE
                                 renderList(it.data)
 
                             }
                             is UiState.Loading -> {
                                 binding.progressBarCountries.visibility = View.VISIBLE
                                 binding.rvCountries.visibility = View.GONE
+                                binding.includeLayoutError.visibility =  View.GONE
                             }
                             is UiState.Error -> {
                                 binding.progressBarCountries.visibility = View.GONE
+                                binding.includeLayoutError.visibility =  View.VISIBLE
                                 Toast.makeText(this@CountriesActivity, it.message, Toast.LENGTH_LONG)
                                     .show()
                                 Log.e("error",it.message)

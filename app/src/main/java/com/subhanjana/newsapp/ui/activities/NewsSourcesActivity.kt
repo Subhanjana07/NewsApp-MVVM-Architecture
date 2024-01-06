@@ -54,6 +54,11 @@ class NewsSourcesActivity : AppCompatActivity() {
                 (recyclerView.layoutManager as LinearLayoutManager).orientation)
         )
         recyclerView.adapter = newsSourceAdapter
+        binding.layoutError.btnError.setOnClickListener {
+            binding.progressBarSource.visibility = View.VISIBLE
+            binding.includeLayoutError.visibility = View.GONE
+            newsSourceViewModel.fetchSource()
+        }
     }
     private fun renderList(sourceList: List<Source>) {
         newsSourceAdapter.addData(sourceList)
@@ -67,15 +72,18 @@ class NewsSourcesActivity : AppCompatActivity() {
                         is UiState.Success -> {
                             binding.progressBarSource.visibility = View.GONE
                             binding.rvSource.visibility = View.VISIBLE
+                            binding.includeLayoutError.visibility =  View.GONE
                             renderList(it.data)
 
                         }
                         is UiState.Loading -> {
                             binding.progressBarSource.visibility = View.VISIBLE
                             binding.rvSource.visibility = View.GONE
+                            binding.includeLayoutError.visibility =  View.GONE
                         }
                         is UiState.Error -> {
                             binding.progressBarSource.visibility = View.GONE
+                            binding.includeLayoutError.visibility =  View.VISIBLE
                             Toast.makeText(this@NewsSourcesActivity, it.message, Toast.LENGTH_LONG)
                                 .show()
                             Log.e("error",it.message)

@@ -101,6 +101,11 @@ class NewsListActivity : AppCompatActivity() {
             )
             recyclerView.adapter = newsListAdapter
         }
+        binding.layoutError.btnError.setOnClickListener {
+            binding.progressBarNewsList.visibility = View.VISIBLE
+            binding.includeLayoutError.visibility = View.GONE
+            getData()
+        }
         getData()
     }
     private fun setupObserver() {
@@ -112,14 +117,17 @@ class NewsListActivity : AppCompatActivity() {
                             binding.progressBarNewsList.visibility = View.GONE
                             binding.rvNewsList.visibility = View.VISIBLE
                             renderList(it.data)
+                            binding.includeLayoutError.visibility =  View.GONE
 
                         }
                         is UiState.Loading -> {
                             binding.progressBarNewsList.visibility = View.VISIBLE
                             binding.rvNewsList.visibility = View.GONE
+                            binding.includeLayoutError.visibility =  View.GONE
                         }
                         is UiState.Error -> {
                             binding.progressBarNewsList.visibility = View.GONE
+                            binding.includeLayoutError.visibility =  View.VISIBLE
                             Toast.makeText(this@NewsListActivity, it.message, Toast.LENGTH_LONG)
                                 .show()
                             Log.e("error",it.message)
@@ -133,6 +141,5 @@ class NewsListActivity : AppCompatActivity() {
     private fun renderList(newsList: List<Article>) {
         newsListAdapter.addData(newsList)
         newsListAdapter.notifyDataSetChanged()
-//        println("newsLisAdapter count::" + newsLisAdapter.itemCount + " newsList size ::" + newsList.size)
     }
 }

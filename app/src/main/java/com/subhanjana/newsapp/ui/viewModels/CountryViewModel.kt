@@ -16,7 +16,7 @@ class CountryViewModel(private val topHeadlineRepository: TopHeadlineRepository)
     init{
         fetchCountries()
     }
-    private fun fetchCountries() {
+    fun fetchCountries() {
         viewModelScope.launch {
             topHeadlineRepository.getCountries()
                 .catch { e ->

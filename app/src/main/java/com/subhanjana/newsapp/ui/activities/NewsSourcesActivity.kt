@@ -59,6 +59,10 @@ class NewsSourcesActivity : AppCompatActivity() {
             binding.includeLayoutError.visibility = View.GONE
             newsSourceViewModel.fetchSource()
         }
+        newsSourceAdapter.itemClickListener = {source ->
+            startActivity(NewsListActivity.getIntent(this, newsId = 3, newsSource = source.id))
+
+        }
     }
     private fun renderList(sourceList: List<Source>) {
         newsSourceAdapter.addData(sourceList)

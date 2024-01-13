@@ -2,11 +2,13 @@ package com.subhanjana.newsapp.ui.activities
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -105,6 +107,12 @@ class NewsListActivity : AppCompatActivity() {
             binding.progressBarNewsList.visibility = View.VISIBLE
             binding.includeLayoutError.visibility = View.GONE
             getData()
+        }
+        newsListAdapter.itemClickListener = {it ->
+            val builder = CustomTabsIntent.Builder()
+            val customTabsIntent = builder.build()
+            customTabsIntent.launchUrl(this, Uri.parse(it.url))
+
         }
         getData()
     }

@@ -59,6 +59,9 @@ class LanguageActivity : AppCompatActivity() {
             binding.includeLayoutError.visibility = View.GONE
             languageViewModel.fetchLanguage()
         }
+        languageAdapter.itemClickListener = { language->
+            startActivity(NewsListActivity.getIntent(this, newsId = 1, newsLanguage = language.id))
+        }
     }
     private fun renderList(languageList: List<Language>) {
         languageAdapter.addData(languageList)

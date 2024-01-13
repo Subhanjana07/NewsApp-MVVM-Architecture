@@ -8,21 +8,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.subhanjana.newsapp.data.model.Article
 import com.subhanjana.newsapp.databinding.ItemNewsListBinding
+import com.subhanjana.newsapp.utils.ItemClickListener
 
 class NewsListAdapter(private val newsList: ArrayList<Article>)
     : RecyclerView.Adapter<NewsListAdapter.DataViewHolder> () {
 
+        lateinit var itemClickListener: ItemClickListener<Article>
         class DataViewHolder(private val binding: ItemNewsListBinding)
             : RecyclerView.ViewHolder(binding.root) {
-            fun bind(article: Article){
+            fun bind(article: Article,itemClickListener: ItemClickListener<Article>){
                 binding.textViewNewsListTitle.text = article.title
                 binding.textViewNewsListDescription.text = article.description
                 binding.textViewNewsListSource.text = article.source.name
                 Glide.with(binding.imageViewNewsListBanner.context).load(article.imageUrl).into(binding.imageViewNewsListBanner)
                 itemView.setOnClickListener {
-                    val builder = CustomTabsIntent.Builder()
-                    val customTabsIntent = builder.build()
-                    customTabsIntent.launchUrl(it.context, Uri.parse(article.url))
+                    itemClickListener(article)
                 }
             }
         }
@@ -33,7 +33,7 @@ class NewsListAdapter(private val newsList: ArrayList<Article>)
 
         override fun getItemCount(): Int = newsList.size
 
-        override fun onBindViewHolder(holder: DataViewHolder, position: Int) = holder.bind(newsList[position])
+        override fun onBindViewHolder(holder: DataViewHolder, position: Int) = holder.bind(newsList[position],itemClickListener)
 
         fun addData (list: List<Article>){
             newsList.addAll(list)

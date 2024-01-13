@@ -8,21 +8,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.subhanjana.newsapp.data.model.Article
 import com.subhanjana.newsapp.databinding.ItemTopHeadlineBinding
+import com.subhanjana.newsapp.utils.ItemClickListener
 
 class TopHeadlineAdapter(private val articleList : ArrayList<Article>)
     : RecyclerView.Adapter<TopHeadlineAdapter.DataViewHolder> () {
 
+        lateinit var itemClickListener: ItemClickListener<Article>
         class DataViewHolder(private val binding: ItemTopHeadlineBinding)
             : RecyclerView.ViewHolder(binding.root) {
-                fun bind(article: Article){
+                fun bind(article: Article,itemClickListener: ItemClickListener<Article>){
                     binding.textViewTitle.text = article.title
                     binding.textViewDescription.text = article.description
                     binding.textViewSource.text = article.source.name
                     Glide.with(binding.imageViewBanner.context).load(article.imageUrl).into(binding.imageViewBanner)
                     itemView.setOnClickListener {
-                        val builder = CustomTabsIntent.Builder()
-                        val customTabsIntent = builder.build()
-                        customTabsIntent.launchUrl(it.context, Uri.parse(article.url))
+                        itemClickListener(article)
                     }
                 }
         }
@@ -33,7 +33,7 @@ class TopHeadlineAdapter(private val articleList : ArrayList<Article>)
 
     override fun getItemCount(): Int = articleList.size
 
-    override fun onBindViewHolder(holder: DataViewHolder, position: Int) = holder.bind(articleList[position])
+    override fun onBindViewHolder(holder: DataViewHolder, position: Int) = holder.bind(articleList[position],itemClickListener)
     fun addData (list: List<Article>){
         articleList.addAll(list)
     }

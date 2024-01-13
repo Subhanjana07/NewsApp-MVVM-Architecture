@@ -1,10 +1,12 @@
 package com.subhanjana.newsapp.ui.activities
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -58,6 +60,11 @@ class TopHeadlineActivity : AppCompatActivity() {
             binding.progressBarTopHeadline.visibility = View.VISIBLE
             binding.includeLayoutError.visibility =  View.GONE
             topHeadlineViewModel.fetchNews()
+        }
+        topHeadlineAdapter.itemClickListener = {it ->
+            val builder = CustomTabsIntent.Builder()
+                        val customTabsIntent = builder.build()
+                        customTabsIntent.launchUrl(this, Uri.parse(it.url))
         }
     }
     private fun renderList(articleList: List<Article>) {

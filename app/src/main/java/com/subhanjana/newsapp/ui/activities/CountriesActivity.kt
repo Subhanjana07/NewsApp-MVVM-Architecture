@@ -59,6 +59,9 @@ class CountriesActivity : AppCompatActivity() {
             binding.includeLayoutError.visibility = View.GONE
             countryViewModel.fetchCountries()
         }
+        countryAdapter.itemClickListener = {country ->
+             startActivity(NewsListActivity.getIntent(this, newsId = 2, newsCountry = country.id))
+        }
     }
     private fun renderList(countryList: List<Country>) {
         countryAdapter.addData(countryList)
